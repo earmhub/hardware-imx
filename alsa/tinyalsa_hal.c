@@ -72,6 +72,7 @@
 #define PCM_HW_PARAMS_NORESAMPLE (1<<0)
 #endif
 
+#include "config_sgtl5000.h"
 
 /* ALSA ports for IMX */
 #define PORT_MM     0
@@ -120,6 +121,7 @@
 
 /*"null_card" must be in the end of this array*/
 struct audio_card *audio_card_list[SUPPORT_CARD_NUM] = {
+    &sgtl5000_card,
     &wm8958_card,
     &wm8962_card,
     &hdmi_card,
@@ -519,7 +521,6 @@ static int get_card_for_device(struct imx_audio_device *adev, int device, unsign
         for(i = 0; i < MAX_AUDIO_CARD_NUM; i++) {
             if(adev->card_list[i]->supported_out_devices & device) {
                   card = adev->card_list[i]->card;
-                  break;
             }
         }
     } else {
@@ -3384,6 +3385,7 @@ static int scan_available_device(struct imx_audio_device *adev, bool rescanusb, 
     }
     adev->audio_card_num = k;
     /*must have one card*/
+	ALOGW("###################MAIN AUDIO CARD:%s\n",adev->card_list[0]->name);
     if(!adev->card_list[0]) {
         ALOGE("no supported sound card found, aborting.");
         return  -EINVAL;
