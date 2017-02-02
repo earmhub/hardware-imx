@@ -273,6 +273,10 @@ int CameraHAL::getNumberOfCameras()
 int CameraHAL::getCameraInfo(int id, struct camera_info* info)
 {
     ALOGI("%s: camera id %d: info=%p", __func__, id, info);
+    ALOGI("######## camera id=%d",id);
+    ALOGI("######## camera mCameraCount=%d",mCameraCount);
+    ALOGI("######## camera id str=%s",mCameras[id]);
+
     if ((id < 0) || (id >= mCameraCount) || (mCameras[id] == NULL)) {
         ALOGE("%s: Invalid camera id %d", __func__, id);
         return -ENODEV;
